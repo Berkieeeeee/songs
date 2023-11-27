@@ -19,37 +19,37 @@ class AlbumsTableSeeder extends Seeder
                 'name' => 'Album 1',
                 'year' => 2005,
                 'times_sold' => 100000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Album 2',
                 'year' => 2012,
                 'times_sold' => 75000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Album 3',
                 'year' => 2018,
                 'times_sold' => 50000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Album 4',
                 'year' => 2008,
                 'times_sold' => 120000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Album 5',
                 'year' => 2015,
                 'times_sold' => 90000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
-
-        // // foreach ($albums as $album) {
-        //     DB::table('albums')->insert([
-        //         'name' => $album['name'],
-        //         'year' => $album['year'],
-        //         'times_sold' => $album['times_sold'],
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ]);
-        // // }
     }
 }

@@ -20,30 +20,25 @@ class BandsTableSeeder extends Seeder
                 'genre' => 'Rock',
                 'founded' => 2000,
                 'active_till' => 'Heden',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Band 2',
                 'genre' => 'Pop',
                 'founded' => 1995,
                 'active_till' => 'Heden',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Band 3',
                 'genre' => 'Metal',
                 'founded' => 2010,
                 'active_till' => '2022',
-            ],
-        ];
-
-        foreach ($bands as $band) {
-            DB::table('bands')->insert([
-                'name' => $band['name'],
-                'genre' => $band['genre'],
-                'founded' => $band['founded'],
-                'active_till' => $band['active_till'],
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
-        }
+            ],
+        ];
     }
 }
