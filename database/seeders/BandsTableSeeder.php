@@ -14,7 +14,7 @@ class BandsTableSeeder extends Seeder
      */
     public function run()
     {
-        $bands = [
+        DB::table('bands')->insert([
             [
                 'name' => 'Band 1',
                 'genre' => 'Rock',
@@ -39,6 +39,6 @@ class BandsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ];
+        ]);
     }
 }
