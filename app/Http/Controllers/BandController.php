@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use app\Models\Band;
 
 class BandController extends Controller
 {
@@ -33,9 +34,10 @@ class BandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Band $band)
     {
-        //
+        $albums = $band->albums;
+        return view('bands.show', compact('band', 'albums'));
     }
 
     /**

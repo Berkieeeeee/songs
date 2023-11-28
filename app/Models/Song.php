@@ -17,11 +17,15 @@ class Song extends Model
 
     // public $timestamps = true;
 
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<string>
      */
+    public function albums()
+    {
+        return $this->belongsToMany(Album::class);
+    }
     protected $fillable = ['title', 'singer'];
 }

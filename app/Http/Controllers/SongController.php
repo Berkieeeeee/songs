@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Song;
+use App\Models\Album;
 use Illuminate\Support\Facades\DB;
 
 class SongController extends Controller
@@ -68,11 +69,13 @@ class SongController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Song $song)
     {
-        $song = Song::find($id);
-        return view('edit', compact('song'));
-    }    
+        $albums = Album::all();
+        return view('edit', compact('song', 'albums'));
+    }   
+
+
     
     /**
      * Update the specified resource in storage.
