@@ -1,15 +1,23 @@
-<form method="POST" action="{{ route('albums.update', $album->id) }}">
+<!-- resources/views/albums/edit.blade.php -->
+
+@extends('layouts.app')
+
+@section('content')
+
+<h1>Edit Album</h1>
+
+<form action="/albums/{{ $album->id }}" method="POST">
     @csrf
     @method('PUT')
-
-    <!-- Andere velden voor album bewerken -->
-
-    <label for="song_id">Add Song to Album:</label>
-    <select name="song_id" id="song_id">
-        @foreach ($songs as $song)
-            <option value="{{ $song->id }}">{{ $song->name }}</option>
-        @endforeach
-    </select>
-
-    <button type="submit">Update Album</button>
+    <div class="form-group">
+        <label for="name">Album Name:</label>
+        <input type="text" name="name" id="name" value="{{ $album->name }}">
+    </div>
+    {{-- Add other album fields as needed --}}
+    <button type="submit" class="button">Update</button>
+    <a class="album-details" href="{{ route('albums.index') }}">Back to Albums</a>
 </form>
+
+</div>
+</div>
+@endsection
