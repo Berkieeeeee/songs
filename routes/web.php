@@ -20,9 +20,9 @@ Route::put('/songs/{id}', [SongController::class, 'update'])->name('songs.update
 
 // Bands Routes
 Route::get('/bands', [BandController::class, 'index'])->name('Bands.index');
-Route::get('/bands/{id}', [BandController::class, 'show'])->name('Bands.show');
 Route::get('/bands/create', [BandController::class, 'create'])->name('Bands.create');
 Route::post('/bands/create', [BandController::class, 'store'])->name('Bands.store');
+Route::get('/bands/{id}', [BandController::class, 'show'])->name('Bands.show');
 Route::delete('/bands/{id}', [BandController::class, 'destroy'])->name('Bands.destroy');
 Route::get('/bands/{id}/edit', [BandController::class, 'edit'])->name('Bands.edit');
 Route::put('/bands/{id}', [BandController::class, 'update'])->name('Bands.update');

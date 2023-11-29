@@ -1,8 +1,3 @@
-<!-- resources/views/albums/show.blade.php -->
-
-@extends('layouts.app')
-
-@section('content')
 
 <h1>Album Details</h1>
 
@@ -12,4 +7,4 @@
     <a href="/albums">Back to Albums</a>
 </div>
 
-@endsection
+

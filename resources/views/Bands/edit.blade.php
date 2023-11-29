@@ -1,9 +1,4 @@
 
-
-@extends('layouts.app')
-
-@section('content')
-
 <h1>Edit Band</h1>
 
 <form action="/Bands/{{ $Band->id }}" method="POST">
@@ -19,4 +14,4 @@
 
 </div>
 </div>
-@endsection
+
