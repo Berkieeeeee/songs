@@ -14,7 +14,7 @@ class BandController extends Controller
     {
         // Get all bands from the database
         $bands = Band::all();
-
+    
         // Pass the bands to the view for display
         return view('bands.index', compact('bands'));
     }
@@ -40,34 +40,59 @@ class BandController extends Controller
      */
     public function show(Band $band)
     {
+        // Check if the band exists
+        if (!$band) {
+            return view('bands.show', ['band' => null, 'songs' => [], 'albums' => []]);
+        }
+    
         // Get the albums associated with the band
-        $albums = $band->albums;
-
-        // Pass the band and its albums to the view for display
-        return view('bands.show', compact('band', 'albums'));
+        $songs = $band->songs ?? [];
+        $albums = $band->albums ?? [];
+    
+        // Add this line to pass the bands variable to the view
+        $bands = Band::all();
+    
+        return view('bands.show', ['band' => $band, 'songs' => $songs, 'albums' => $albums, 'bands' => $bands]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Band $band)
     {
         // You can implement band editing logic here
+        return view('bands.edit', compact('band'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Band $band)
     {
-        // You can implement band updating logic here
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|max:255',
+                'genre' => 'required|max:255',
+                'founded' => 'required|date',
+                'active_till' => 'nullable|date',
+            ]);
+
+            $band->update($validatedData);
+
+            return redirect()->route('bands.index')->with('success', 'Band updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Failed to update the band');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Band $band)
     {
-        // You can implement band deletion logic here
+        $band->delete();
+
+        return redirect()->route('bands.index')->with('success', 'Band deleted successfully');
     }
 }
