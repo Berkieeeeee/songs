@@ -23,9 +23,14 @@ class Song extends Model
      *
      * @var array<string>
      */
+    protected $fillable = ['title', 'singer', 'album_id'];
+    public function songs()
+    {
+        return $this->belongsToMany(Song::class, 'album_song');
+    }
+    
     public function albums()
     {
-        return $this->belongsToMany(Album::class);
+        return $this->belongsToMany(Album::class, 'album_song', 'song_id', 'album_id');
     }
-    protected $fillable = ['title', 'singer'];
 }
