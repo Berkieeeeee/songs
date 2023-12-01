@@ -73,9 +73,9 @@
             <ul>
                 @foreach ($song->albums as $album)
                 <li>
-                    {{ $album->name }}
+                    <strong>Album:</strong> {{ $album->name }}<br>
                     @if ($album->band)
-                    - {{ $album->band->name }}
+                    <strong>Band:</strong> {{ $album->band->name }}<br>
                     @endif
                 </li>
                 @endforeach

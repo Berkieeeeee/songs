@@ -137,7 +137,7 @@
     </header>
     <div class="content">
         <h1>Edit Song</h1>
-        <form action="/songs/{{ $song->id }}" method="POST">
+        <form action="{{route('songs.update', ['song' => $song->id]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">

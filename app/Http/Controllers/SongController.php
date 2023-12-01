@@ -58,7 +58,7 @@ class SongController extends Controller
      */
     public function show($id)
     {
-        $songs = DB::table('songs')->get();
+        $songs = DB::table('songs')->get(); // doodstraf
         $song = Song::find($id);
         return view('detail', [
             'songs' => $songs, 
