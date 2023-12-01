@@ -19,5 +19,8 @@ class Band extends Model
         return $this->hasMany(Album::class);
     }
 
-    // Add more relationships or methods if needed...
+    public function songs()
+{
+    return $this->hasMany(Song::class);
+}
 }

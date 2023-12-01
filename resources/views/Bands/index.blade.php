@@ -128,11 +128,6 @@
                         <tr>
                             <td><a href="/bands/{{ $band['id'] }}">{{ $band['name'] }}</a></td>
                             <td class="band-actions">
-                                <form action="/bands/{{ $band['id'] }}/edit" method="GET">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="button" type="submit">Edit</button>
-                                </form>
                                 <form action="/bands/{{ $band['id'] }}" method="POST">
                                     @csrf
                                     @method('DELETE')

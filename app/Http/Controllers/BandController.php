@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Band;
+use Illuminate\Support\Facades\DB;
 
 class BandController extends Controller
 {
@@ -42,19 +43,15 @@ class BandController extends Controller
     {
         // Check if the band exists
         if (!$band) {
-            return view('bands.show', ['band' => null, 'songs' => [], 'albums' => []]);
+            return view('bands.show', ['band' => null, 'albums' => []]);
         }
     
-        // Get the albums associated with the band
-        $songs = $band->songs ?? [];
-        $albums = $band->albums ?? [];
+        // Explicitly retrieve albums for the band without relying on relationships
+        $albums = DB::table('albums')->where('band_id', $band->id)->get();
     
-        // Add this line to pass the bands variable to the view
-        $bands = Band::all();
-    
-        return view('bands.show', ['band' => $band, 'songs' => $songs, 'albums' => $albums, 'bands' => $bands]);
+        return view('bands.show', ['band' => $band, 'albums' => $albums]);
     }
-    
+     
 
     /**
      * Show the form for editing the specified resource.
