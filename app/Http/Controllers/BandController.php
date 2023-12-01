@@ -32,10 +32,19 @@ class BandController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // You can implement band storage logic here
-    }
+{
+    $validatedData = $request->validate([
+        'name' => 'required|max:255',
+        'genre' => 'required|max:255',
+        'founded' => 'required|integer',
+        'active_till' => 'nullable|date',
+    ]);
 
+    // Create and save a band with the given data
+    Band::create($validatedData);
+
+    return redirect()->route('bands.index')->with('success', 'Band created successfully');
+}
     /**
      * Display the specified resource.
      */

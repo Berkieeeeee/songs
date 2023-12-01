@@ -148,10 +148,21 @@
                 <label for="singer">Artist:</label>
                 <input type="text" name="singer" id="singer" value="{{ $song->singer }}">
             </div>
+            <div class="form-group">
+            <label for="albums">Albums:</label><br>
+            @foreach ($albums as $album)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="album_{{ $album->id }}" name="albums[]"
+                        value="{{ $album->id }}" @if ($song->albums->contains($album->id)) checked @endif>
+                    <label class="form-check-label" for="album_{{ $album->id }}">
+                        {{ $album->name }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
             <button type="submit" class="button">Update</button>
             <a class="song-details" href="{{ route('songs.index') }}">Back to Songs</a>
         </form>
-    </div>
     </div>
 </body>
 

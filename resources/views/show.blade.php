@@ -115,7 +115,7 @@
     <div class="content">
         <h1>Show Songs</h1>
         <div class="create-button">
-            <a href="/create">Create New Song</a>
+            <a href="/songs/create">Create New Song</a>
         </div>
         <div class="song-list">
             <table>

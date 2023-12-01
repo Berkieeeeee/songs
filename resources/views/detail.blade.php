@@ -67,22 +67,21 @@
             <p>Zanger: {{ $song['singer'] }}</p>
             <p>Aangemaakt op: {{ \Carbon\Carbon::parse($song['created_at'])->timezone('Europe/Amsterdam')}}</p>
             <p>Bijgewerkt op: {{ \Carbon\Carbon::parse($song['updated_at'])->timezone('Europe/Amsterdam')}}</p>
-            @if ($song->albums && $song->albums instanceof \Illuminate\Database\Eloquent\Collection &&
-            $song->albums->isNotEmpty())
+            @if ($song->albums->isNotEmpty())
             <p><strong>Albums:</strong></p>
             <ul>
                 @foreach ($song->albums as $album)
-                <li>
-                    <strong>Album:</strong> {{ $album->name }}<br>
-                    @if ($album->band)
-                    <strong>Band:</strong> {{ $album->band->name }}<br>
-                    @endif
-                </li>
+                    <li>
+                        {{ $album->name }}
+                        @if ($album->band)
+                            - {{ $album->band->name }}
+                        @endif
+                    </li>
                 @endforeach
             </ul>
-            @else
+        @else
             <p><strong>Album:</strong> Geen album</p>
-            @endif
+        @endif
             <a href="/songs">Back to Songs</a>
         </div>
     </div>

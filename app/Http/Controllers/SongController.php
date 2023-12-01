@@ -29,27 +29,35 @@ class SongController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    
     public function store(Request $request)
     {
         try {
             $validatedData = $request->validate([
                 'title' => 'required|max:255',
                 'singer' => 'required|max:255',
+                // Add any additional validation rules for other fields
+                'albums' => 'array|nullable', // Validation for albums (assuming it's an array)
             ]);
     
-            /*DB::table('songs')->insert([
+            // Create a new song instance
+            $song = new Song([
                 'title' => $validatedData['title'],
                 'singer' => $validatedData['singer'],
-            ]);*/
-            //  $song =new Song();
-            //  $song -> title =$validatedData['title'];
-            //  $song -> singer=$validatedData['singer'];
-            //  $song -> save();
-            Song::create($validatedData);
+                // Add any additional fields you want to set
+            ]);
+    
+            // Save the song
+            $song->save();
+    
+            // Attach albums to the song if provided
+            if (isset($validatedData['albums'])) {
+                $song->albums()->attach($validatedData['albums']);
+            }
     
             return redirect()->route('songs.show')->with('success', 'Song added successfully');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('success', 'Song added successfully');
+            return redirect()->back()->withInput()->with('error', 'Failed to add song. ' . $e->getMessage());
         }
     }
     
@@ -86,13 +94,22 @@ class SongController extends Controller
             $validatedData = $request->validate([
                 'title' => 'required|max:255',
                 'singer' => 'required|max:255',
+                // Add any additional validation rules for other fields
+                'albums' => 'array|nullable', // Validation for albums (assuming it's an array)
             ]);
     
-            $song = Song::findOrFail($id)->update($validatedData);
-            // $song->title = $validatedData['title'];
-            // $song->singer = $validatedData['singer'];
-            // $song->save();
-      
+            $song = Song::findOrFail($id);
+    
+            // Update the song attributes
+            $song->update($validatedData);
+    
+            // Sync the albums for the song
+            if (isset($validatedData['albums'])) {
+                $song->albums()->sync($validatedData['albums']);
+            } else {
+                $song->albums()->sync([]); // If no albums selected, detach all albums
+            }
+    
             return redirect()->route('songs.index')->with('success', 'Song updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Failed to update the song');
