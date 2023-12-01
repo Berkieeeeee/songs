@@ -125,18 +125,18 @@
                 </thead>
                 <tbody>
                     @foreach ($bands as $band)
-                        <tr>
-                            <td><a href="/bands/{{ $band['id'] }}">{{ $band['name'] }}</a></td>
-                            <td class="band-actions">
-                                <form action="/bands/{{ $band['id'] }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" name="band_id" value="{{ $band['id'] }}">
-                                    <button class="button" type="submit"
-                                            onclick="return confirm('Are you sure you want to delete it?')">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td><a href="/bands/{{ $band['id'] }}">{{ $band['name'] }}</a></td>
+                        <td class="band-actions">
+                            <form action="{{ route('bands.destroy', $band['id']) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="band_id" value="{{ $band['id'] }}">
+                                <button class="button" type="submit"
+                                    onclick="return confirm('Are you sure you want to delete it?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
