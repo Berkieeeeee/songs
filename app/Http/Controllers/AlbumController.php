@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Song;
 use App\Models\Album;
-use App\Models\Bands;
+use App\Models\Band;
 
 class AlbumController extends Controller
 {
@@ -22,19 +22,37 @@ class AlbumController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+   
+     public function create()
+     {
+         $bands = Band::all(); // Assuming you have a Band model
+     
+         return view('albums.create', ['bands' => $bands]);
+     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'year' => 'required|integer',
+            'times_sold' => 'required|integer',
+            'band_id' => 'required|exists:bands,id', // Ensure the selected band exists
+        ]);
+    
+        // Create the album
+        $album = Album::create([
+            'name' => $request->input('name'),
+            'year' => $request->input('year'),
+            'times_sold' => $request->input('times_sold'),
+            'band_id' => $request->input('band_id'),
+        ]);
+    
+        // Redirect to albums.index
+        return redirect()->route('albums.index')->with('success', 'Album created successfully');
     }
-
     /**
      * Display the specified resource.
      */
