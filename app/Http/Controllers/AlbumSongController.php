@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use app\Models\Album;
 
 class AlbumSongController extends Controller
 {
@@ -57,8 +58,17 @@ class AlbumSongController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $album, string $song)
     {
-        //
+        try {
+            // Detach the specified song from the album
+            $result = $album->songs()->detach($song->id);
+    
+            dd($result); // Add this line to see the result of the detach operation
+    
+            return redirect()->route('albums.show', $album->id)->with('success', 'Song removed from the album successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to remove the song from the album. ' . $e->getMessage());
+        }
     }
 }

@@ -125,7 +125,7 @@
                         <tr>
                             <th>Song Title</th>
                             <th>Singer</th>
-                            <th>Actions</th> 
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -135,12 +135,12 @@
                             <td>{{ $song->singer }}</td>
                             <td>
                                 <!-- Delete button -->
-                                <form action="{{ route('albums.destroy', ['album' => $album, 'songs' => $song]) }}"
-                                    method="POST" style="display: inline;">
+                                <form
+                                    action="{{ route('songs.destroy', ['album' => $album->id, 'song' => $song->id]) }}"
+                                    method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="delete-song"
-                                        onclick="return confirm('Are you sure you want to delete this song from the album?')">Delete</button>
+                                    <button type="submit" class="delete-song">Delete Song</button>
                                 </form>
 
                                 <!-- Show button -->

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumSongController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\AlbumController;
@@ -35,3 +36,7 @@ Route::get('/albums/{album}', [AlbumController::class, 'show'])->name('albums.sh
 Route::delete('/albums/{album}', [AlbumController::class, 'destroy'])->name('albums.destroy');
 Route::get('/albums/{id}/edit', [AlbumController::class, 'edit'])->name('albums.edit');
 Route::put('/albums/{id}', [AlbumController::class, 'update'])->name('albums.update');
+// overige
+
+Route::delete('/albums/{album}/songs/{song}', [AlbumController::class, 'destroy'])->name('songs.destroy');
+

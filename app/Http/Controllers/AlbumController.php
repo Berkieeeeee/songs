@@ -33,25 +33,22 @@ class AlbumController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $albumId)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'year' => 'required|integer',
-            'times_sold' => 'required|integer',
-            'band_id' => 'required|exists:bands,id', // Ensure the selected band exists
-        ]);
-    
-        // Create the album
-        $album = Album::create([
-            'name' => $request->input('name'),
-            'year' => $request->input('year'),
-            'times_sold' => $request->input('times_sold'),
-            'band_id' => $request->input('band_id'),
-        ]);
-    
-        // Redirect to albums.index
-        return redirect()->route('albums.index')->with('success', 'Album created successfully');
+        try {
+            $album = Album::findOrFail($albumId);
+
+            $request->validate([
+                'song_id' => 'required|exists:songs,id',
+            ]);
+
+            
+            $album->songs()->attach($request->input('song_id'));
+
+            return redirect()->route('albums.show', $albumId)->with('success', 'Song added to the album successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Failed to add the song to the album. ' . $e->getMessage());
+        }
     }
     /**
      * Display the specified resource.
@@ -114,16 +111,19 @@ class AlbumController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Album $album, Song $song)
-{
-    try {
-        // Detach the specified song from the album
-        $album->songs()->detach($song->id);
+    public function destroy($albumId, $songId)
+    {
+        try {
+            $album = Album::findOrFail($albumId);
+            $song = Song::findOrFail($songId);
 
-        return redirect()->route('albums.show', $album->id)->with('success', 'Song removed from the album successfully');
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Failed to remove the song from the album. ' . $e->getMessage());
+            
+            $album->songs()->detach($song->id);
+
+            return redirect()->route('albums.show', $album->id)->with('success', 'Song removed from the album successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to remove the song from the album. ' . $e->getMessage());
+        }
     }
-}
 
 }
