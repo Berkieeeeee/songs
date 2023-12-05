@@ -58,6 +58,22 @@
             text-align: left;
         }
 
+        .delete-song {
+            background-color: #d9534f;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-song:hover {
+            background-color: #c9302c;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -109,6 +125,7 @@
                         <tr>
                             <th>Song Title</th>
                             <th>Singer</th>
+                            <th>Actions</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -116,6 +133,19 @@
                         <tr>
                             <td>{{ $song->title }}</td>
                             <td>{{ $song->singer }}</td>
+                            <td>
+                                <!-- Delete button -->
+                                <form action="{{ route('albums.destroy', ['album' => $album, 'songs' => $song]) }}"
+                                    method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="delete-song"
+                                        onclick="return confirm('Are you sure you want to delete this song from the album?')">Delete</button>
+                                </form>
+
+                                <!-- Show button -->
+                                <a href="{{ route('songs.show', $song->id) }}" class="delete-song">Show</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

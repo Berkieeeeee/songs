@@ -121,11 +121,12 @@ class SongController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Song $song)
     {
-        Song::destroy($id);
-    
-        return redirect()->route('songs.index')->with('success', 'Song deleted successfully');
+        // Detach the song from all albums
+        $song->albums()->detach();
+
+        return redirect()->route('songs.index')->with('success', 'Song deleted from the album successfully');
     }
     
 }

@@ -32,26 +32,19 @@ class BandController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'year' => 'required|integer',
-            'times_sold' => 'required|integer',
-            'band_id' => 'required|exists:bands,id', // Make sure the band_id exists in the bands table
-        ]);
-    
-        // Create and save an album with the given data
-        $album = Album::create([
-            'name' => $validatedData['name'],
-            'year' => $validatedData['year'],
-            'times_sold' => $validatedData['times_sold'],
-            'band_id' => $validatedData['band_id'], // Assign the band_id
-        ]);
-    
-        // Redirect to albums.index
-        return redirect()->route('albums.index')->with('success', 'Album created successfully');
-    }
+{
+    $validatedData = $request->validate([
+        'name' => 'required|max:255',
+        'genre' => 'required|max:255',
+        'founded' => 'required|integer',
+        'active_till' => 'nullable|date',
+    ]);
+
+    // Create and save a band with the given data
+    Band::create($validatedData);
+
+    return redirect()->route('bands.index')->with('success', 'Band created successfully');
+}
     /**
      * Display the specified resource.
      */
